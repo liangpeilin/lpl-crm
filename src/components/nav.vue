@@ -2,7 +2,7 @@
   <div id="nav">
     <nav>
       <span>这是我logo</span>
-      <a v-for="i in items">{{i}}</a>
+      <a v-for="i in navList">{{i.name}}</a>
     </nav>
     <ul>
       <li v-if="is_login" ></li>
@@ -26,20 +26,21 @@
     name: 'nav',
     data: function () {
       return {
-        items: [
-          'site',
-          'about',
-          'abc'
-        ],
+        navList: [],
         styleData: styleData,
         is_login: false
       }
     },
+    computed: {
+    },
     methods: {
 //      展示登录/注册表单
       show_loginForm: function () {
-        this.$router.push({ path: 'Login' })
+        this.$router.push({ name: 'login' })
       }
+    },
+    mounted: function () {
+      this.navList = this.$store.state.nav.navList
     }
   }
 </script>
@@ -85,7 +86,7 @@
       .child;
       a{
         .child-child;
-        &:hover{
+        &:hover {
           box-shadow: 0 15px 25px -4px rgba(0, 0, 0, 0.5), inset 0 -3px 4px -1px rgba(0, 0, 0, 0.2), 0 -10px 15px -1px rgba(255, 255, 255, 0.6), inset 0 3px 4px -1px rgba(255, 255, 255, 0.2), inset 0 0 5px 1px rgba(255, 255, 255, 0.8), inset 0 20px 30px 0 rgba(255, 255, 255, 0.2);
         }
       }

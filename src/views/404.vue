@@ -3,8 +3,8 @@
     <h1><img src="../assets/404.jpg" alt="404"/></h1>
     <h2><em><span class="STYLE1">404 Error&nbsp;&nbsp; </span></em>:所查找的页面不存在,可能已被删除或您输错了网址!</h2>
     <p class="link">
-      <a href="javasrcipt:;">&#9666;返回首页</a>
-      <a href="javasrcipt:;">&#9666;返回上一页</a>
+      <a href="javascript:;" @click="back_off('home')">&#9666;返回首页</a>
+      <a href="javascript:;" @click="back_off(-1)">&#9666;返回上一页</a>
     </p>
     <dl class="texts">
       <dt>正在联系总部查找您所需要的页面.请返回等待信息..</dt>
@@ -24,6 +24,12 @@
   export default {
     data: function () {
       return {
+      }
+    },
+    methods: {
+      back_off: function (value) {
+        if (typeof value === 'string') this.$router.push({name: value})
+        this.$router.go(value)
       }
     }
   }

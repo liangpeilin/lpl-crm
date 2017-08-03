@@ -8,13 +8,15 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
+      name: 'home',
+      path: '/home',
       components: {
         default: components.nav
       },
       children: [
         {
-          path: 'Login',
+          name: 'login',
+          path: 'login',
           components: {
             default: components.login
           }

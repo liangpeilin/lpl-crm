@@ -13,11 +13,11 @@
           <input type="password" placeholder="Password" v-model="password"  name="password" required/>
         </div>
         <div>
-          <label class="form-label"><input type="checkbox" v-model="Remember" name="Rmemeber"/>Remember Me</label>
+          <label class="form-label"><input type="checkbox" v-model="remember" name="Rmemeber"/>Remember Me</label>
         </div>
         <div>
           <button type="submit">Log In</button>
-          <button type="button">Find PassWord</button>
+          <button type="button" @click.prevent="findPW">Find PassWord</button>
         </div>
       </form>
       <form  method="post" v-show="!toggleActive" @submit.prevent="signUp">
@@ -34,26 +34,66 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
+  import * as api from '../api'
   export default {
     name: 'login',
     data: function () {
       return {
-        toggleActive: true,
-        userName: '',
-        password: '',
-        Remember: false,
-        email: ''
+        toggleActive: true
       }
     },
     computed: {
+      userName: {
+        get: function () {
+          return this.$store.state.user.name || ''
+        },
+        set: function (value) {
+          this.$store.commit({type: 'set_user', user_property: 'name', user_value: value})
+        }
+      },
+      password: {
+        get: function () {
+          return this.$store.state.user.password || ''
+        },
+        set: function (value) {
+          this.$store.commit({type: 'set_user', user_property: 'password', user_value: value})
+        }
+      },
+      remember: {
+        get: function () {
+          return this.$store.state.user.remember || ''
+        },
+        set: function (value) {
+          this.$store.commit({type: 'set_user', user_property: 'remember', user_value: value})
+        }
+      },
+      email: {
+        get: function () {
+          return this.$store.state.user.email || ''
+        },
+        set: function (value) {
+          this.$store.commit({type: 'set_user', user_property: 'email', user_value: value})
+        }
+      },
+      ...mapGetters({
+        getUser: 'getUser'
+      })
     },
     methods: {
       signIn: () => {
         alert('勺子一个')
       },
-      signUp: () => {
-        alert('吃货一枚')
+      signUp: function () {
+        console.log(this.getUser)
+      },
+      findPW: function () {
+        this.$router.push('/error')
       }
+    },
+    mounted: function () {
+      var user = api.getUserData('')
+      if (user !== '') console.log(user)
     }
   }
 </script>
